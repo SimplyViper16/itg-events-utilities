@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"module": "NodeNext",
+		"target": "ES6",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"sourceMap": false,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"outDir": "./dist",
+		"resolveJsonModule": true,
+		"lib": ["es2017"]
+	}
+}

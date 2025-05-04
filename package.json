@@ -1,0 +1,33 @@
+{
+	"name": "itg-events-utilities",
+	"version": "1.0.0",
+	"description": "Download all your unlocks, score and compare from ITL site!",
+	"scripts": {
+		"build": "tsc",
+		"start": "npx ts-node ./src/main.ts",
+		"package": "npx ts-node ./src/package.ts"
+	},
+	"keywords": [
+		"itl",
+		"unlocks",
+		"scores",
+		"compare",
+		"online"
+	],
+	"author": "Valentina Viper Meneghello",
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
+		"@types/node": "^22.13.16",
+		"@yao-pkg/pkg": "^6.3.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.2"
+	},
+	"dependencies": {
+		"@inquirer/prompts": "^7.4.0",
+		"@types/exceljs": "^0.5.3",
+		"exceljs": "^4.4.0",
+		"fs-extra": "^11.3.0",
+		"picocolors": "^1.1.1",
+		"zip-lib": "^1.0.5"
+	}
+}
