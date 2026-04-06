@@ -1,13 +1,15 @@
-export const eventName = 'ITL Online 2025';
-export const eventNameShort = 'itl2025';
+export const eventYear = 2026;
+export const eventName = `ITL Online ${eventYear}`;
 
-export const siteUrl = 'https://itl2025.groovestats.com';
-export const apiRoutes = {
-	login: '/api/session/login',
-	session: '/api/session',
-	entrant: '/api/entrant',
-	unlocks: '/api/unlock/list?displayRomaji=false',
-	leaderboard: '/api/entrant/leaderboard',
+export const api = {
+    baseUrl: 'https://itl2026.groovestats.com',
+    routes: {
+        login: '/api/session/login',
+        session: '/api/session',
+        entrant: '/api/entrant',
+        unlocks: '/api/unlock/list?displayRomaji=false',
+        leaderboard: '/api/entrant/leaderboard',
+    },
 };
 
 export const maxDownloadAttempts = 5;

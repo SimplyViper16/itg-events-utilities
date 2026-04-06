@@ -1,72 +1,79 @@
-import { bgBlue, yellow } from 'picocolors';
-import { chooseLanguage, dictionary, language } from './modules/dictionary';
-import { loginUser } from './common/login';
-import { manageUnlocks } from './modules/unlocks';
 import { select, Separator } from '@inquirer/prompts';
-import { saveITLScoresJson } from './modules/scores';
-import { waitKeyToClose } from './common/common';
-import { saveComparisonExcel } from './modules/compare';
+import pColors from 'picocolors';
+import { getTranslatedLabel, setLanguage } from './common/dictionary/main.js';
+import { loginUser } from './common/login/main.js';
+import { waitKeyToClose } from './common/utils.js';
+import { downloadITLJson } from './modules/own-scores.js';
+import { saveComparisonExcel } from './modules/scores-compare.js';
+import { manageUnlocks } from './modules/unlocks/main.js';
 
 (async () => {
-	// clear the console
-	console.clear();
+    // clear the console
+    console.clear();
 
-	await chooseLanguage();
+    // choose language
+    await setLanguage();
 
-	console.log(bgBlue(yellow(dictionary[language].welcome.toUpperCase())));
+    // say hello
+    console.log(
+        pColors.bgBlue(
+            pColors.yellow(getTranslatedLabel('welcome').toUpperCase()),
+        ),
+    );
 
-	// login
-	let promptLogin = true;
+    // login
+    let promptLogin = true;
 
-	while (promptLogin) {
-		console.log(''); // space
-		const isLogged = await loginUser();
+    while (promptLogin) {
+        console.log(''); // space
+        const isLogged = await loginUser();
 
-		if (isLogged) promptLogin = false;
-	}
+        if (isLogged) promptLogin = false;
+    }
 
-	console.log(''); // space
-	const action = await select({
-		message: dictionary[language].actions.message,
-		choices: [
-			{
-				name: dictionary[language].actions.list.unlocks.title,
-				value: 'download-unlocks',
-				description:
-					dictionary[language].actions.list.unlocks.description,
-			},
-			{
-				name: dictionary[language].actions.list.jsonScores.title,
-				value: 'download-json-scores',
-				description:
-					dictionary[language].actions.list.jsonScores.description,
-			},
-			{
-				name: dictionary[language].actions.list.excelCompare.title,
-				value: 'download-excel-compare',
-				description:
-					dictionary[language].actions.list.excelCompare.description,
-			},
-			new Separator(),
-			{
-				name: dictionary[language].actions.list.exit.title,
-				value: 'exit',
-			},
-		],
-	});
+    console.log(''); // space
+    const action = await select({
+        message: getTranslatedLabel('actions.message'),
+        choices: [
+            {
+                name: getTranslatedLabel('actions.list.unlocks.title'),
+                value: 'download-unlocks',
+                description: getTranslatedLabel(
+                    'actions.list.unlocks.description',
+                ),
+            },
+            {
+                name: getTranslatedLabel('actions.list.jsonScores.title'),
+                value: 'download-json-scores',
+                description: getTranslatedLabel(
+                    'actions.list.jsonScores.description',
+                ),
+            },
+            {
+                name: getTranslatedLabel('actions.list.excelCompare.title'),
+                value: 'download-excel-compare',
+                description: getTranslatedLabel(
+                    'actions.list.excelCompare.description',
+                ),
+            },
+            new Separator(),
+            {
+                name: getTranslatedLabel('actions.list.exit.title'),
+                value: 'exit',
+            },
+        ],
+    });
 
-	console.log(''); // space
+    console.log(''); // space
 
-	if (action === 'download-unlocks') {
-		await manageUnlocks();
-	}
-	if (action === 'download-json-scores') {
-		await saveITLScoresJson();
-	}
-	if (action === 'download-excel-compare') {
-		await saveComparisonExcel();
-	}
+    if (action === 'download-unlocks') {
+        await manageUnlocks();
+    } else if (action === 'download-json-scores') {
+        await downloadITLJson();
+    } else if (action === 'download-excel-compare') {
+        await saveComparisonExcel();
+    }
 
-	console.log(''); // space
-	await waitKeyToClose();
+    console.log(''); // space
+    await waitKeyToClose();
 })();
